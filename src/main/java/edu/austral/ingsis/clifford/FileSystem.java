@@ -1,5 +1,6 @@
 package edu.austral.ingsis.clifford;
 
+import edu.austral.ingsis.clifford.commands.Command;
 import edu.austral.ingsis.clifford.files.Directory;
 
 public class FileSystem {
@@ -7,7 +8,7 @@ public class FileSystem {
     private Directory currentDirectory;
 
     public FileSystem() {
-        root = new Directory("root", null);
+        root = new Directory("root");
         currentDirectory = root;
     }
 
@@ -27,5 +28,18 @@ public class FileSystem {
             return true;
         }
         return false;
+    }
+
+    public boolean moveToChildDirectory(String directory) {
+        Directory newDirectory = currentDirectory.findDirectory(directory);
+        if (newDirectory != null) {
+            currentDirectory = newDirectory;
+            return true;
+        }
+        return false;
+    }
+
+    public String executeCommand(Command command, String[] path) {
+        return command.execute(path);
     }
 }
