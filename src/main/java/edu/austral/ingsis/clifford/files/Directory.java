@@ -52,26 +52,11 @@ public class Directory implements Node{
 
     public String printPath() {
         if (parent == null) {
-            return "/" + name;
+            return "/" ;
         }
         return parent.printPath() + name;
     }
 
-    public String listFilesAsc() {
-        StringBuilder files = new StringBuilder();
-        for (Node child : children) {
-            files.append(child.getName()).append("\n");
-        }
-        return files.toString();
-    }
-
-    public String listFilesDesc() {
-        StringBuilder files = new StringBuilder();
-        for (int i = children.size() - 1; i >= 0; i--) {
-            files.append(children.get(i).getName()).append("\n");
-        }
-        return files.toString();
-    }
 
     public Directory findDirectory(String substring) {
         if (name.equals(substring)) {

@@ -16,7 +16,8 @@ public class Touch implements Command{
     public String execute(String[] path) {
         if (path.length == 0) return "touch: missing file operand";
         String fileName = path[0];
-        File file = new File(fileName, fileSystem.getCurrentDirectory());
+        File newFile = new File(fileName, fileSystem.getCurrentDirectory());
+        fileSystem.getCurrentDirectory().addChild(newFile);
         return "'" + fileName + "' file created";
     }
 }

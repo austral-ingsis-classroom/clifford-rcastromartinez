@@ -15,7 +15,8 @@ public class MySystemRunner implements FileSystemRunner{
         List<String> results = new ArrayList<>();
         for (String command : commands) {
             Command cmd = strToCommand(command, fileSystem);
-            results.add(fileSystem.executeCommand(cmd, command.split(" ")));
+            List<String> commandParts = List.of(command.split(" "));
+            results.add(fileSystem.executeCommand(cmd, commandParts.subList(1, commandParts.size()).toArray(new String[0])));
         }
         return results;
     }

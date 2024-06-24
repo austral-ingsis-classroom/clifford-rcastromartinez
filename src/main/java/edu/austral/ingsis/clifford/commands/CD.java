@@ -25,14 +25,14 @@ public class CD implements Command {
             }
             Directory parent = fileSystem.getCurrentDirectory().getParent();
             fileSystem.moveToParentDirectory(parent);
-            return "Moved to directory: '" + fileSystem.getCurrentDirectory().getName() + "'";
+            return "moved to directory: '" + fileSystem.getCurrentDirectory().getName() + "'";
         } else if (directory.equals(".")) {
-            return "Moved to directory: '" + fileSystem.getCurrentDirectory().getName() + "'";
+            return "moved to directory: '" + fileSystem.getCurrentDirectory().getName() + "'";
         } else if (directory.startsWith("/")) {
 
             boolean success = fileSystem.moveToDirectory(directory.substring(1));
             if (success) {
-                return "Moved to directory: '" + fileSystem.getCurrentDirectory().getName() + "'";
+                return "moved to directory: '" + fileSystem.getCurrentDirectory().getName() + "'";
             } else {
                 return "No such directory: " + directory;
             }
@@ -41,7 +41,7 @@ public class CD implements Command {
         } else {
             boolean success = fileSystem.moveToChildDirectory(directory);
             if (success) {
-                return "Moved to directory: '" + fileSystem.getCurrentDirectory().getName() + "'";
+                return "moved to directory '" + fileSystem.getCurrentDirectory().getName() + "'";
             } else {
                 return "No such directory: " + directory;
             }

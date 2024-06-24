@@ -28,14 +28,14 @@ public class Rm implements Command {
         }
         for(Node child : node) {
             if (child instanceof Directory) {
-                return "Cannot remove '" + path + "', is a directory";
+                return "cannot remove '" + path + "', is a directory";
             }
             if (node instanceof Directory) {
                 if (Objects.equals(args[0], "--recursive")) {
                     fileSystem.getCurrentDirectory().removeChild(child);
                     return "'" + path + "' removed";
                 }
-                return "Cannot remove '" + path + "', is a directory";
+                return "cannot remove '" + path + "', is a directory";
             }
         }
         fileSystem.getCurrentDirectory().removeChild(node.get(0));
