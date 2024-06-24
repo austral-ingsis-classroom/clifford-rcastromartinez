@@ -21,7 +21,7 @@ public class CD implements Command {
 
         if(directory.equals("/")) {
             fileSystem.moveToParentDirectory(fileSystem.getRoot());
-            return "moved to directory '" + fileSystem.getCurrentDirectory().getName() + "'";
+            return "moved to directory '/'";
         }
 
         if (directory.equals("..")) {
@@ -37,23 +37,15 @@ public class CD implements Command {
             return "moved to directory '" + fileSystem.getCurrentDirectory().getName() + "'";
         } else if (directory.equals(".")) {
             return "moved to directory '" + fileSystem.getCurrentDirectory().getName() + "'";
-        } else if (directory.startsWith("/")) {
-
-            boolean success = fileSystem.moveToDirectory(directory.substring(1));
-            if (success) {
-                return "moved to directory: '" + fileSystem.getCurrentDirectory().getName() + "'";
-            } else {
-                return "'" + directory+ "' directory does not exist";
-            }
-
-
         } else {
-            boolean success = fileSystem.moveToChildDirectory(directory);
-            if (success) {
-                return "moved to directory '" + fileSystem.getCurrentDirectory().getName() + "'";
-            } else {
-                return "'" + directory+ "' directory does not exist";
+            String[] directories = directory.split("/");
+            for (String dir : directories) {
+                boolean success = fileSystem.moveToChildDirectory(dir);
+                if (!success) {
+                    return "'" + dir + "' directory does not exist";
+                }
             }
+            return "moved to directory '" + fileSystem.getCurrentDirectory().getName() + "'";
         }
     }
 }

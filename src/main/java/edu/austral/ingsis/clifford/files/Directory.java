@@ -52,9 +52,9 @@ public class Directory implements Node{
 
     public String printPath() {
         if (parent == null) {
-            return "/" ;
+            return "" ;
         }
-        return parent.printPath() + name;
+        return parent.printPath() + "/" + name;
     }
 
 
