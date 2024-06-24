@@ -19,22 +19,31 @@ public class CD implements Command {
 
         String directory = path[0];
 
+        if(directory.equals("/")) {
+            fileSystem.moveToParentDirectory(fileSystem.getRoot());
+            return "moved to directory '" + fileSystem.getCurrentDirectory().getName() + "'";
+        }
+
         if (directory.equals("..")) {
             if (fileSystem.getCurrentDirectory().getParent() == null) {
-                return "Already in root directory";
+                return "moved to directory '/'";
             }
             Directory parent = fileSystem.getCurrentDirectory().getParent();
             fileSystem.moveToParentDirectory(parent);
-            return "moved to directory: '" + fileSystem.getCurrentDirectory().getName() + "'";
+            if (parent == fileSystem.getRoot()) {
+                return "moved to directory '/'";
+            }
+
+            return "moved to directory '" + fileSystem.getCurrentDirectory().getName() + "'";
         } else if (directory.equals(".")) {
-            return "moved to directory: '" + fileSystem.getCurrentDirectory().getName() + "'";
+            return "moved to directory '" + fileSystem.getCurrentDirectory().getName() + "'";
         } else if (directory.startsWith("/")) {
 
             boolean success = fileSystem.moveToDirectory(directory.substring(1));
             if (success) {
                 return "moved to directory: '" + fileSystem.getCurrentDirectory().getName() + "'";
             } else {
-                return "No such directory: " + directory;
+                return "'" + directory+ "' directory does not exist";
             }
 
 
@@ -43,7 +52,7 @@ public class CD implements Command {
             if (success) {
                 return "moved to directory '" + fileSystem.getCurrentDirectory().getName() + "'";
             } else {
-                return "No such directory: " + directory;
+                return "'" + directory+ "' directory does not exist";
             }
         }
     }

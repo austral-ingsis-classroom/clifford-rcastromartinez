@@ -72,4 +72,13 @@ public class Directory implements Node{
         }
         return null;
     }
+
+    public Node getChild(String nodeName) {
+        for (Node child : children) {
+            if (child.getName().equals(nodeName)) {
+                return child;
+            }
+        }
+        return null;
+    }
 }

@@ -8,38 +8,28 @@ import java.util.List;
 import java.util.Objects;
 
 public class Rm implements Command {
-    private FileSystem fileSystem;
+    private final FileSystem fileSystem;
 
-    public Rm (FileSystem fileSystem) {
+    public Rm(FileSystem fileSystem) {
         this.fileSystem = fileSystem;
     }
 
     @Override
     public String execute(String[] args) {
-        if (args.length == 0) {
-            return "Invalid command, missing file operand";
+        if (args.length == 0) return "rm: missing operand";
+        String nodeName = args[0];
+        boolean recursive = args.length > 1 && args[0].equals("--recursive");
+        if(recursive) {
+            nodeName = args[1];
         }
-
-        String path = args[0];
-        List<Node> node = fileSystem.getCurrentDirectory().getChildren();
-
-        if (node == null) {
-            return "No such file or directory: " + path;
+        Node node = fileSystem.getCurrentDirectory().getChild(nodeName);
+        if (node == null && !args[0].equals("--recursive")) {
+            return "'" + nodeName + "' does not exist";
+        } else if (node instanceof Directory && !recursive) {
+            return "cannot remove '" + nodeName + "', is a directory";
+        } else {
+            fileSystem.getCurrentDirectory().removeChild(node);
+            return "'" + nodeName + "' removed";
         }
-        for(Node child : node) {
-            if (child instanceof Directory) {
-                return "cannot remove '" + path + "', is a directory";
-            }
-            if (node instanceof Directory) {
-                if (Objects.equals(args[0], "--recursive")) {
-                    fileSystem.getCurrentDirectory().removeChild(child);
-                    return "'" + path + "' removed";
-                }
-                return "cannot remove '" + path + "', is a directory";
-            }
-        }
-        fileSystem.getCurrentDirectory().removeChild(node.get(0));
-        return "'" + path + "' removed";
     }
-
 }

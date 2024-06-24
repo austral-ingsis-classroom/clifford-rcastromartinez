@@ -42,4 +42,8 @@ public class FileSystem {
     public String executeCommand(Command command, String[] path) {
         return command.execute(path);
     }
+
+    public Directory getRoot() {
+        return root;
+    }
 }
