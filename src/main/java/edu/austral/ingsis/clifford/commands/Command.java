@@ -1,5 +1,5 @@
 package edu.austral.ingsis.clifford.commands;
 
 public interface Command {
-    String execute(String[] path);
+  String execute(String[] path);
 }
